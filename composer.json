@@ -1,0 +1,27 @@
+{
+    "name": "fei/audit-package",
+    "description": "Audit client package integration for Objective PHP applications",
+    "type": "library",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "Boris Cerati",
+            "email": "bce@opcoding.eu"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Fei\\Service\\Audit\\Package\\": "src/"
+        }
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://composer.flash-global.net"
+        }
+    ],
+    "require": {
+        "objective-php/application": "~1.1.0",
+        "fei/audit-client": "~1.0.0"
+    }
+}
