@@ -4,7 +4,6 @@ namespace Fei\Service\Audit\Package;
 
 use Fei\ApiClient\Transport\BasicTransport;
 use Fei\ApiClient\Transport\BeanstalkProxyTransport;
-use Fei\Service\Audit\Client\Audit;
 use Fei\Service\Audit\Package\Config\AuditAsyncTransport;
 use Fei\Service\Audit\Package\Config\AuditParam;
 use Fei\Service\Audit\Package\Config\AuditTransportOptions;
