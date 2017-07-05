@@ -12,8 +12,6 @@ You will have to integrate it to your Objective PHP project with `composer requi
 
 As shown below, the Audit Package must be plugged in the application initialization method.
 
-The Audit Package create a Audit Client service that will be consumed by the application's middlewares.
-
 ```php
 <?php
 
@@ -25,7 +23,7 @@ class Application extends AbstractApplication
     public function init()
     {
         // Define some application steps
-        $this->addSteps('bootstrap', 'init', 'auth', 'route', 'rendering');
+        $this->addSteps('init', 'bootstrap', 'auth', 'route', 'rendering');
         
         // Initializations...
 
@@ -33,13 +31,29 @@ class Application extends AbstractApplication
         $this->getStep('bootstrap')
         ->plug(AuditPackage::class);
 
-        // Another initializations...
+        // Other initializations...
     }
 }
 ```
+The Audit Package creates an Audit Client service that will be exposed to the application through the ServicesFactory dependency container with "audit.client" as default identifier. Then, you can fetch the audit client as any other service from the factory:
+
+```php
+
+class AnyMiddleware {
+
+    public function __invoke(ApplicationInterface $app) {
+        // please note that it's a better practice to inject the audit client 
+        // into the middleware rather than pulling it from the container
+        $auditClient = $app->getServicesFactory()->get('audit.client');
+    }
+
+}
+
+```
+
 ### Application configuration
 
-Create a file in your configuration directory and put your Audit configuration as below:
+Create a file or edit an existing one in your configuration directory and put your Audit configuration as below:
 
 ```php
 <?php
@@ -52,6 +66,8 @@ return [
 
 In the previous example you need to set this configuration:
 
-* `AuditParam` : represent the URL where the API can be contacted in order to send the mails
+* `AuditParam` expects an array, with the allowed following 
+
+    * Audit::OPTION_BASEURL: represent the URL where the API can be contacted in order to send the mails
 
 Please check out `audit-client` documentation for more information about how to use this client.
